@@ -1,7 +1,6 @@
 # `unvarify`
 
-> **Warning**
-
+> **Warning**<br>
 > Please don't acfually use this. Try [postcss-css-variables](https://github.com/MadLittleMods/postcss-css-variables) instead.
 > I made this tool (originally a script) to quickly unvarify a CSS file for a Codepen and kept going with it... I don't know why.
 
@@ -21,15 +20,11 @@ node console.js <args> --input <filename> --output <filename>
 
 `-c, --check`: Check input for errors before processing.
 
-`-r, --remove`: Remove unused variables after processing.
-> **Note**
+`-r, --remove`: Remove unused variables after processing. [^1]
+[^1]: With `--remove`, you may have empty selectors. I recommend using `--format` after using `--remove` to fix.
 
-> With `--remove`, you may have empty selectors. I recommend using `--format` after using `--remove` to fix.
-
-`-f, --format`: Format processed content before writing to file.
-> **Note**
-
-> Uses CleanCSS under the hood.
+`-f, --format`: Format processed content before writing to file. [^2]
+[^2]: Uses CleanCSS under the hood.
 
 `-v, --verbose`: Show verbose output.
 
