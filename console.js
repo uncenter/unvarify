@@ -21,13 +21,13 @@ const options = yargs
     })
     .option("i", {
         alias: "input",
-        describe: "Input file name",
+        describe: "Input file name to unvarify",
         type: "string",
         demandOption: true,
     })
     .option("o", {
         alias: "output",
-        describe: "Output file name",
+        describe: "Output file name to write to",
         type: "string",
         demandOption: true,
     }).argv;
