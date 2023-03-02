@@ -1,6 +1,6 @@
 const fs = require("fs");
 const yargs = require("yargs");
-const { replaceVars, removeVars, validateInput, formatOutput } = require("./index.js");
+const { replaceVars, removeVars, validateInput, prettyOutput, minifyOutput } = require("./index.js");
 
 const options = yargs
     .usage("Usage: -i <input> -o <output>")
@@ -14,14 +14,24 @@ const options = yargs
         describe: "Remove unused variables after processing",
         type: "boolean",
     })
-    .option("f", {
-        alias: "format",
-        describe: "Format processed content before writing to file",
+    .option("p", {
+        alias: "pretty",
+        describe: "Prettify processed content before writing to file",
+        type: "boolean",
+    })
+    .option("m", {
+        alias: "minify",
+        describe: "Minify processed content before writing to file",
         type: "boolean",
     })
     .option("v", {
         alias: "verbose",
         describe: "Show verbose output",
+        type: "boolean",
+    })
+    .option("s", {
+        alias: "silent",
+        describe: "Silence all output",
         type: "boolean",
     })
     .option("i", {
@@ -43,7 +53,7 @@ function main() {
         if (err) {
             throw new Error("Input file not found.");
         } else {
-            if (options.verbose) {
+            if (options.silent) {
                 console.log("Input file found.");
             }
         }
@@ -63,13 +73,20 @@ function main() {
             data = removeVars(data, { verbose: options.verbose });
         }
 
-        if (options.format) {
-            data = formatOutput(data, { verbose: options.verbose });
+        if (options.minify && options.pretty) {
+            throw new Error("Cannot minify and prettify at the same time.");
+        }
+
+        if (options.minify) {
+            data = minifyOutput(data, { verbose: options.verbose });
+        }
+        if (options.pretty) {
+            data = prettyOutput(data, { verbose: options.verbose });
         }
 
         fs.writeFile(options.output, data, function (err) {
             if (err) throw err;
-            if (options.verbose) {
+            if (options.silent) {
                 console.log("Output written to file.");
             }
         });

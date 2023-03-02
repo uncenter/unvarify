@@ -66,16 +66,24 @@ function validateInput(input) {
     return result;
 }
 
-function formatOutput (input, options = { verbose: false }) {
+function prettyOutput (input, options = { verbose: false }) {
     if (options.verbose) {
-        console.log(`Formatted processed output.`);
+        console.log(`Prettified processed output.`);
     }
     return cssbeautify(new CleanCSS().minify(input).styles);
+}
+
+function minifyOutput (input, options = { verbose: false }) {
+    if (options.verbose) {
+        console.log(`Minified processed output.`);
+    }
+    return new CleanCSS().minify(input).styles;
 }
 
 module.exports = {
     replaceVars,
     removeVars,
     validateInput,
-    formatOutput,
+    prettyOutput,
+    minifyOutput
 };
