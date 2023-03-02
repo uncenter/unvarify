@@ -53,15 +53,71 @@ See [the roadmap](ROADMAP.md) for upcoming features and changes.
 
 ### Examples
 
-Just unvarify the file:
+#### Just unvarify the file
+
 ```sh
 node console.js --input input.css --output output.css
 ```
 
-Check before unvarifying and then prettify the file:
+Would turn this:
+```css
+:root {
+    --color: #FFFFF;
+}
+
+body {
+    background-color: var(--color);
+}
+```
+
+into this:
+```css
+:root {
+    --color: #FFFFF;
+}
+
+body {
+    background-color: #FFFFF;
+}
+```
+As you can see, variables are replaced with their values.
+
+#### Remove unused variables
+
+```sh
+node console.js -r --input input.css --output output.css
+```
+
+Would turn this:
+```css
+:root {
+    --color: #FFFFF;
+}
+
+body {
+    background-color: var(--color);
+}
+```
+into this:
+```css
+:root {
+
+}
+body {
+    background-color: #FFFFF;
+}
+```
+As you can see, variables are removed. However, the empty `:root` selector is still present. You can use `--prettify` (or `--minify`) to fix this.
+
+#### Check for errors before unvarifying
+
+Important if you are unusre if your CSS file is valid. Invalid CSS can cause the program to break. I probably should have made this the default behavior lmao.
+
 ```sh
 node console.js -c -p --input input.css --output output.css
 ```
+
+This would exit if the input file is invalid (i.e. if it contains errors that would cause the browser to throw an error, not stylistic issues).
 
 ## License
 
