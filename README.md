@@ -4,7 +4,7 @@ A ~~simple~~ cursed tool to "unvarify" a CSS file by replacing all the variables
 
 ## Usage
 
-```
+```sh
 node console.js <args> --input <filename> --output <filename>
 ```
 
@@ -18,10 +18,12 @@ node console.js <args> --input <filename> --output <filename>
 
 `-r, --remove`: Remove unused variables after processing.
 > **Note**
+
 > With `--remove`, you may have empty selectors. I recommend using `--format` after using `--remove` to fix.
 
 `-f, --format`: Format processed content before writing to file.
 > **Note**
+
 > Uses CleanCSS under the hood.
 
 `-v, --verbose`: Show verbose output.
@@ -36,12 +38,12 @@ See [the roadmap](ROADMAP.md) for upcoming features and changes.
 ### Examples
 
 Just unvarify the file:
-```
+```sh
 node console.js --input input.css --output output.css
 ```
 
 Check before unvarifying and then prettify the file:
-```
+```sh
 node console.js -c -p --input input.css --output output.css
 ```
 
