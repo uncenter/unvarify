@@ -1,6 +1,6 @@
 # `unvarify`
 
-A simple tool to "unvarify" a CSS file by replacing all the variables with their values. 
+A ~~simple~~ cursed tool to "unvarify" a CSS file by replacing all the variables with their values. 
 
 ## Usage
 
