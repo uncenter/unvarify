@@ -25,7 +25,7 @@ node console.js <args> --input <filename> --output <filename>
 `--version`: Show version number.
 
 
-See [the roadmap](ROADMAP) for upcoming features and changes.
+See [the roadmap](ROADMAP.md) for upcoming features and changes.
 
 ### Examples
 
