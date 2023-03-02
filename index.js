@@ -3,13 +3,16 @@ var CleanCSS = require('clean-css');
 var cssbeautify = require('cssbeautify');
 const { validate } = require('csstree-validator');
 
-function replaceVariables(input) {
+function replaceVars(input, options = { verbose: false }) {
     const declarations = [];
 
     input = input.replace(
         /(--[a-zA-Z0-9-]+)\s*:\s*([^;]+);/g,
         (match, variable, value) => {
             declarations.push({ variable, value });
+            if (options.verbose) {
+                console.log(`Variable found: ${variable} = ${value}`);
+            }
             return match;
         }
     );
@@ -33,11 +36,13 @@ function replaceVariables(input) {
         return match;
     });
 
-    console.log(`Variables replaced (${declarations.length}).`);
+    if (options.verbose) {
+        console.log(`Replaced ${declarations.length} variables.`);
+    }
     return input;
 }
 
-function removeVariables (input) {
+function removeVars (input, options = { verbose: false }) {
     let count = 0;
     input = input.replace(/(--[a-zA-Z0-9-]+)\s*:\s*((?!url\().)+;/g,
         (match, variable) => {
@@ -49,40 +54,28 @@ function removeVariables (input) {
             }
         }
     );
-    console.log(`Variables removed (${count}).`);
+    if (options.verbose) {
+        console.log(`Removed ${count} variables.`);
+    }
     return input;
 }
 
-function validateCSS(input) {
+function validateInput(input) {
     const result = validate(input, 'input.css');
 
     return result;
 }
 
-function formatCSS (input) {
+function formatOutput (input, options = { verbose: false }) {
+    if (options.verbose) {
+        console.log(`Formatted processed output.`);
+    }
     return cssbeautify(new CleanCSS().minify(input).styles);
 }
 
-function main () {
-    fs.readFile("test.css", "utf8", function (err, data) {
-        if (err) throw err;
-        if (validateCSS(data).length !== 0) {
-            console.log(validateCSS(data));
-            throw new Error('CSS validation failed.');
-        } else {
-            console.log('CSS validation passed.');
-        }
-        data = formatCSS(replaceVariables(data));
-        fs.writeFile("output.css", data, function (err) {
-            if (err) throw err;
-            console.log("Output written to file.");
-        });
-    });
-}
-
 module.exports = {
-    replaceVariables,
-    removeVariables,
-    validateCSS,
-    formatCSS,
+    replaceVars,
+    removeVars,
+    validateInput,
+    formatOutput,
 };

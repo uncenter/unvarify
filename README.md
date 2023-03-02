@@ -14,11 +14,13 @@ node console.js <args> --input <filename> --output <filename>
 
 `-o, --output <filename>`: The output file (**required**).
 
-`-v, --validate`: Validate input before processing.
+`-c, --check`: Check input for errors before processing.
 
 `-r, --remove`: Remove unused variables after processing.
 
 `-f, --format`: Format processed content before writing to file.
+
+`-v, --verbose`: Show verbose output.
 
 `--help`: Show help.
 
@@ -31,12 +33,12 @@ See [the roadmap](ROADMAP.md) for upcoming features and changes.
 
 Just unvarify the file:
 ```
-node console.js --input index.css --output index-unvarified.css
+node console.js --input input.css --output output.css
 ```
 
 Check before unvarifying and then prettify the file:
 ```
-node console.js -c -p --input index.css --output index-unvarified.css
+node console.js -c -p --input input.css --output output.css
 ```
 
 ## License

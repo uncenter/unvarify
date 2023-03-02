@@ -1,12 +1,12 @@
 const fs = require("fs");
 const yargs = require("yargs");
-const { replaceVariables, removeVariables, validateCSS, formatCSS } = require("./index.js");
+const { replaceVars, removeVars, validateInput, formatOutput } = require("./index.js");
 
 const options = yargs
     .usage("Usage: -i <input> -o <output>")
-    .option("v", {
-        alias: "validate",
-        describe: "Validate input before processing",
+    .option("c", {
+        alias: "check",
+        describe: "Check input for errors before processing",
         type: "boolean",
     })
     .option("r", {
@@ -17,6 +17,11 @@ const options = yargs
     .option("f", {
         alias: "format",
         describe: "Format processed content before writing to file",
+        type: "boolean",
+    })
+    .option("v", {
+        alias: "verbose",
+        describe: "Show verbose output",
         type: "boolean",
     })
     .option("i", {
@@ -35,32 +40,38 @@ const options = yargs
 function main() {
     fs.readFile(options.input, "utf8", function (err, data) {
         if (err) throw err;
-
-        // Step 1
-        if (options.validate && validateCSS(data).length !== 0) {
-            console.log(validateCSS(data));
-            throw new Error("CSS validation failed.");
+        if (err) {
+            throw new Error("Input file not found.");
         } else {
-            console.log("CSS validation passed.");
+            if (options.verbose) {
+                console.log("Input file found.");
+            }
         }
 
-        // Intermediary required step
-        data = replaceVariables(data);
-
-        // Step 2
-        if (options.removeVariables) {
-            data = removeVariables(data);
+        if (options.check && validateInput(data).length !== 0) {
+            console.log(validateInput(data));
+            throw new Error("Input failed validation checks.");
+        } else {
+            if (options.check && options.verbose) {
+                console.log("Input passed validation checks.");
+            }
         }
 
-        // Step 3
+        data = replaceVars(data, { verbose: options.verbose });
+
+        if (options.remove) {
+            data = removeVars(data, { verbose: options.verbose });
+        }
+
         if (options.format) {
-            data = formatCSS(data);
+            data = formatOutput(data, { verbose: options.verbose });
         }
 
-        // Final required step
         fs.writeFile(options.output, data, function (err) {
             if (err) throw err;
-            console.log("Output written to file.");
+            if (options.verbose) {
+                console.log("Output written to file.");
+            }
         });
     });
 }
