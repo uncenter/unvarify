@@ -1,5 +1,10 @@
 # `unvarify`
 
+> **Warning**
+
+> Please don't acfually use this. Try [postcss-css-variables](https://github.com/MadLittleMods/postcss-css-variables) instead.
+> I made this tool (originally a script) to quickly unvarify a CSS file for a Codepen and kept going with it... I don't know why.
+
 A ~~simple~~ cursed tool to "unvarify" a CSS file by replacing all the variables with their values. 
 
 ## Usage
