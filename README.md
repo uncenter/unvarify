@@ -17,8 +17,12 @@ node console.js <args> --input <filename> --output <filename>
 `-c, --check`: Check input for errors before processing.
 
 `-r, --remove`: Remove unused variables after processing.
+> **Note**
+> With `--remove`, you may have empty selectors. I recommend using `--format` after using `--remove` to fix.
 
 `-f, --format`: Format processed content before writing to file.
+> **Note**
+> Uses CleanCSS under the hood.
 
 `-v, --verbose`: Show verbose output.
 
