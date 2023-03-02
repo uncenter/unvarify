@@ -3,6 +3,7 @@
         "clean-css": "^5.3.2",
         "cssbeautify": "^0.3.1",
         "csstree-validator": "^3.0.0",
-        "fs": "^0.0.1-security"
+        "fs": "^0.0.1-security",
+        "yargs": "^17.7.1"
     }
 }

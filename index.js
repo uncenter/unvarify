@@ -80,4 +80,9 @@ function main () {
     });
 }
 
-main();
+module.exports = {
+    replaceVariables,
+    removeVariables,
+    validateCSS,
+    formatCSS,
+};
