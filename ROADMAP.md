@@ -5,8 +5,6 @@
 - [ ] The remove variables step messes with semi-colons and isn't doing it properly? I think I have the regex wrong.
 
 ## Arguments
-`-v, --validate`: Validate input before processing.
-
 
 - [ ] `-c, --check`: Change `-v, --validate` to `-c, --check` to allow for '-v, --verbose' in the future.
 - [ ] `-v, --verbose`: Once `-c, --check` is changed, add `-v, --verbose` to display the variables and their values in the replace variables step.
